@@ -8,7 +8,7 @@ var trivia = {
     incorrect: 0,
     unanswered: 0,
     currentSet: 0,
-    timer: 30,
+    timer: 1,
     timerOn: false,
     timerId: "",
 
@@ -36,7 +36,7 @@ var trivia = {
         trivia.unanswered = 0;
         clearInterval(trivia.timerId);
         //adding question options to html on start
-        $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[0] + '</button>'));
+        $("#q1-responses").append($('<option button class="btn btn-info btn-lg btnGuess">' + trivia.options.q1[0] + '</button>'));
         $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[1] + '</button>'));
         $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[2] + '</button>'));
         $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[3] + '</button>'));
@@ -73,21 +73,35 @@ var trivia = {
     //hide start button so gameStart can't be continually called
         $(".start").hide();
     },
-    //start running timer and count score if time runs out
+    //start running timer and adding score to html if timer runs out or total guesses = 5
    timerStart: function(){
        trivia.timer--;
         $("#game-timer").text(trivia.timer);
         if (trivia.timer === 0){
-            trivia.clearInterval;
+            clearInterval(trivia.timerId);
+            $(".start").show();
+            $('#results').html('<h3 class="text-center">Thank you for playing!</h3>'+
+            '<p>Correct: '+ trivia.correct +'</p>'+
+            '<p>Incorrect: '+ trivia.incorrect +'</p>'+
+            '<p>Unaswered: '+ trivia.unanswered +'</p>'+
+            '<p>Please play again!</p>');
+        }else if ((trivia.incorrect + trivia.correct) === 5){
+            clearInterval(trivia.timerId);
+            $(".start").show();
+            $('#results').html('<h3 class="text-center">Thank you for playing!</h3>'+
+            '<p>Correct: '+ trivia.correct +'</p>'+
+            '<p>Incorrect: '+ trivia.incorrect +'</p>'+
+            '<p>Unaswered: '+ trivia.unanswered +'</p>'+
+            '<p>Please play again!</p>');
         }
-       
-       
-   }
-   
-   
-    // guessChecker: function(){
-       
-    // var userGuess = $(".responses").push();}
+    },
+    //comparing text from user guess to the correct answers and adding 
+    guessCheck: function(){
+
+    }
+    
+
+    
 
        
    
@@ -99,17 +113,7 @@ var trivia = {
    
    
    
-    // timerRunning: function(){
-    //     if (trivia.timer > -1){
-    //         $("#game-timer").text(trivia.timer);
-    //         trivia.timer--;
-    //     }else if(trivia.timer === -1){
-    //         trivia.unanswered++;
-    //         trivia.result = false;
-    //         clearInterval(trivia.timerId);
-    //         resultId = setTimeout(trivia.guessResult, 1000)
-    //     }
-    // }
+   
     
     
     
