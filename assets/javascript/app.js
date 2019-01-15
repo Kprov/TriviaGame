@@ -35,7 +35,7 @@ var trivia = {
         trivia.incorrect = 0;
         trivia.unanswered = 0;
         clearInterval(trivia.timerId);
-        //adding first question options to html
+        //adding question options to html on start
         $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[0] + '</button>'));
         $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[1] + '</button>'));
         $("#q1-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q1[2] + '</button>'));
@@ -61,13 +61,55 @@ var trivia = {
         $("#q5-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q5[2] + '</button>'));
         $("#q5-responses").append($('<option button class="btn btn-info btn-lg">' + trivia.options.q5[3] + '</button>'));
 
-
-        $("#results").html("");
+        
 
         $("#game-timer").text(trivia.timer);
+        
+        if(!trivia.timerOn){
+            trivia.timerId = setInterval(trivia.timerStart,1000);
+            trivia.timerOn = true
+            }
+            
+    //hide start button so gameStart can't be continually called
+        $(".start").hide();
+    },
+    //start running timer and count score if time runs out
+   timerStart: function(){
+       trivia.timer--;
+        $("#game-timer").text(trivia.timer);
+        if (trivia.timer === 0){
+            trivia.clearInterval;
+        }
+       
+       
+   }
+   
+   
+    // guessChecker: function(){
+       
+    // var userGuess = $(".responses").push();}
 
-        $("#start-buton").hide();
-    }
+       
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    // timerRunning: function(){
+    //     if (trivia.timer > -1){
+    //         $("#game-timer").text(trivia.timer);
+    //         trivia.timer--;
+    //     }else if(trivia.timer === -1){
+    //         trivia.unanswered++;
+    //         trivia.result = false;
+    //         clearInterval(trivia.timerId);
+    //         resultId = setTimeout(trivia.guessResult, 1000)
+    //     }
+    // }
     
     
     
